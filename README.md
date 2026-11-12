@@ -1,37 +1,63 @@
-# Engineering Workflow Skills
+# Production Engineering Workflow Skills
 
-This pack defines a reusable, evidence-driven workflow for software development. The skills are based on the engineering principles and AI application practices in the provided learning material, expressed as actionable procedures rather than chapter references.
+Version 2.0
+
+This pack defines an evidence-driven workflow for implementation, independent QA, and application-specific security assessment.
 
 ## Roles
+- **Core Engineering Standards** coordinates scope, acceptance criteria, specialist reviews, findings, remediation, and completion.
+- **Developer** investigates and implements the smallest complete solution, adds appropriate tests, verifies changes, and remediates findings.
+- **QA** independently investigates application behavior, derives and creates tests, executes them, identifies defects, and verifies fixes.
+- **Security Agent** maps the real attack surface and trust boundaries, inspects relevant code paths, validates applicable risks safely, and independently verifies remediation.
 
-- **Core Engineering Standards**: coordinates work, defines success, assigns reviews, routes findings, and decides whether completion criteria have been met.
-- **Developer**: investigates and implements changes, verifies them, and fixes reported issues.
-- **QA**: independently tests expected behavior, failure paths, edge cases, and regressions; reports evidence and retests fixes.
-- **Security Agent**: reviews trust boundaries and security risks; reports evidence-backed findings and verifies security remediation.
+## Mandatory workflow
+Request → inspect context → define acceptance criteria and verification → plan → implement → developer verification → independent QA → Security review when required → remediate → re-test/re-review → evidence-based completion.
 
-## Workflow
+QA is expected for code or behavior changes unless a justified exception (such as documentation-only work) is recorded. Security review is required for security-sensitive changes and when project policy requires it. QA and Security must inspect relevant implementation independently; neither may rely only on the Developer's summary or existing tests.
 
-Request → inspect context → define observable acceptance criteria and checks → plan → implement → run relevant checks → invoke QA and Security as applicable → fix findings → re-test and re-review → final evidence-based decision.
+## Minimum investigation standard
+Every role must inspect actual repository/application evidence, trace relevant execution paths, distinguish facts from assumptions, select checks based on actual behavior and risk, capture evidence, and disclose unassessed or blocked areas. Never claim a check passed without observed evidence.
 
-The Core skill coordinates the workflow. Developer owns implementation. QA owns behavioral verification. Security owns security analysis. No role may claim another role's checks were completed without evidence.
+## Learning-material principles operationalized
+- Evaluation-driven development and repeatable success/failure cases.
+- Whole-application evaluation in context.
+- Prompt/model experiments and regression cases when AI is present.
+- Retrieval quality, provenance, and access boundaries.
+- Application-enforced tool permissions and safe consequential actions.
+- Application reconnaissance, architecture and attack-surface analysis.
+- Layered security and defense in depth.
+- API object-, property-, and function-level authorization.
+- Authentication, sessions, injection, browser, XML, dependency, resource, data protection, and operational security.
+- Data minimization, key management, monitoring, and incident readiness where applicable.
 
-## How the skills relate to the provided learning material
+Apply only relevant controls. PCI DSS concepts do not imply PCI applicability or compliance; check the applicable current standard for formal compliance decisions.
 
-The content is operationalized as practical behavior:
-- Define success and build repeatable evaluation before relying on outcomes.
-- Evaluate the complete application in its actual context, not just one component in isolation.
-- Experiment systematically when adjusting prompts or model behavior.
-- Provide relevant context through retrieval when applicable, while treating retrieved content as untrusted.
-- Constrain agent tools and consequential actions with application-enforced permissions.
-- Choose the simplest technique that addresses the observed problem.
-- Consider dataset quality, latency, cost, observability, guardrails, and user feedback when they apply to the system.
+## Versioning and evolution
 
-These are guiding principles, not mandatory AI checks for every project. AI-specific procedures activate only when the application actually uses models, prompts, retrieval, datasets, or agents.
+This repository maintains the engineering skills through incremental improvements.
 
-## Important execution limitation
+- **Initial implementation:** Establishes the foundational roles, responsibilities, and engineering workflow.
+- **Version 2.0:** Strengthens the initial implementation with deeper application investigation, independent QA validation, application-specific security assessment, and stricter evidence-based completion requirements.
 
-A Markdown skill is an instruction set; it does not run on its own. The host platform must load the relevant skill, invoke the appropriate agent/role, provide the required repository context and authorized tools, and route findings to the Developer and coordinator. If the platform cannot invoke the Security Agent, the security review must be marked blocked/not performed—not reported as complete.
+The Git commit history is the source of truth for tracking changes between implementations. Previous implementations remain available through Git history for comparison and reference. The latest committed skill definitions represent the current recommended workflow.
 
-## Evidence and completion
+## Using the skills
 
-Record checks as **passed**, **failed**, **blocked**, **skipped**, or **not run**. A recommendation is not proof that a fix works. A passing test suite only provides evidence for the scenarios it covers. “No findings identified in the reviewed scope” is not a guarantee of security.
+The Developer, QA, and Security Agent skills can be invoked independently when focused execution is required. Core Engineering Standards acts as the workflow coordinator when a complete, coordinated engineering process is needed; it is not a technical dependency of the other three skills.
+
+For complete feature development, use the coordinated workflow:
+
+Request → Developer → Independent QA → Security review (when required) → Remediation → Revalidation → Completion.
+
+## Execution limitation
+A Markdown skill is an instruction set; it does not execute itself. The host platform must load it, invoke the relevant agent, provide repository context and authorized tools, and route findings. If an agent cannot be invoked, mark the review blocked or not performed.
+
+## Status vocabulary
+- **Passed**: check ran and met expected result.
+- **Failed**: check ran and did not meet expected result.
+- **Blocked**: prerequisite prevented execution.
+- **Skipped**: intentionally not run, with rationale.
+- **Not run**: not executed.
+- **Not assessed**: outside the review actually performed.
+
+A passing suite supports only scenarios it covers. “No findings identified in the reviewed scope” is not a guarantee of security.
